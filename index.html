@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ライフゲーム（200×200）</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>ライフゲーム（200×200）</h1>
+  </header>
+
+  <section class="controls">
+    <label for="patternSelect">初期パターン:</label>
+    <select id="patternSelect">
+  <option value="none">-- 選択 --</option>
+  <option value="glider">グライダー</option>
+  <option value="gosper">グライダー銃（Gosper）</option>
+  <option value="hline">横一直線</option>
+  <option value="tumbler">タンブラー</option>
+  <option value="galaxy">銀河（Galaxy）</option>
+  <option value="chuchu">シュシュポッポ列車</option>
+  <option value="hwss">重量級宇宙船（HWSS）</option>
+  <option value="switch">スイッチ機関車</option>
+    </select>
+    <button id="applyPattern">適用</button>
+
+    <button id="startBtn">再生</button>
+    <button id="stopBtn" disabled>停止</button>
+    <button id="stepBtn">1ステップ</button>
+    <button id="clearBtn">クリア</button>
+    <button id="randomBtn">ランダム</button>
+
+    <label for="speedRange">速度:</label>
+    <input id="speedRange" type="range" min="1" max="30" value="10">
+    <span id="speedVal">10</span> fps
+  </section>
+
+  <section class="canvas-wrap">
+    <canvas id="lifeCanvas"></canvas>
+  </section>
+
+  <footer>
+    <small>セル数: 200 × 200</small>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
