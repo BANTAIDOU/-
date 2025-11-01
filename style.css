@@ -1,17 +1,39 @@
+
 :root{
   --canvas-size: 800px; /* 表示上のキャンバスサイズ (COLS*CELL) */
+  --bg: #071022;        /* ページ背景（暗め） */
+  --panel: #0b1220;     /* コントロールパネル */
+  --fg: #d9f6ff;        /* 主要テキスト色（高コントラスト） */
+  --muted: #9fb9c6;     /* 補助テキスト */
+  --accent: #00ffb3;    /* 生セル色 */
+  --accent-2: #6ee7ff;  /* 世代表示などの強調 */
+  --control-bg: rgba(255,255,255,0.03);
 }
-*{box-sizing:border-box}
-body{font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif; margin:16px; color:#222}
-header h1{margin:0 0 12px}
-.controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px}
-.controls label{margin-right:4px}
-button{padding:6px 10px;border-radius:4px;border:1px solid #bbb;background:#f7f7f7;cursor:pointer}
-button:disabled{opacity:0.5;cursor:default}
-.canvas-wrap{border:1px solid #ddd;width:var(--canvas-size);height:var(--canvas-size);display:block}
-canvas{display:block;width:100%;height:100%;background:#fff}
-footer{margin-top:10px;color:#666}
 
+*{box-sizing:border-box}
+html,body{height:100%}
+body{font-family: 'Inter','Noto Sans JP', system-ui, -apple-system, 'Segoe UI', Roboto, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif; margin:16px; color:var(--fg); background:var(--bg)}
+header h1{margin:0 0 12px;color:var(--fg);font-weight:700}
+.app-shell{max-width:1100px;margin:0 auto}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px;background:var(--panel);padding:10px;border-radius:10px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+.controls label{margin-right:4px;color:var(--muted);font-weight:600}
+button{padding:8px 10px;border-radius:8px;border:0;background:var(--control-bg);color:var(--fg);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+button:disabled{opacity:0.45;cursor:default}
+.icon-btn svg{display:block}
+.btn-text{font-weight:600;color:var(--fg)}
+.canvas-wrap{border-radius:10px;overflow:hidden;width:var(--canvas-size);height:var(--canvas-size);display:block;border:2px solid rgba(255,255,255,0.12);box-shadow:0 12px 30px rgba(2,6,23,0.6), inset 0 0 0 1px rgba(255,255,255,0.02)}
+canvas{display:block;width:100%;height:100%;background:var(--panel)}
+footer{margin-top:10px;color:var(--muted)}
+
+/* 世代表示 */
+.gen-display{margin-left:8px;font-weight:700;color:var(--accent-2)}
+
+/* Responsive */
+@media (max-width:1100px){
+  .app-shell{padding:0 12px}
+}
 @media (max-width:900px){
   :root{--canvas-size:min(92vw,600px)}
+  .controls{padding:8px}
+  .btn-text{display:none}
 }

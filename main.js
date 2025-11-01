@@ -26,6 +26,12 @@ const speedVal = document.getElementById('speedVal');
 let running = false;
 let timerId = null;
 let fps = Number(speedRange.value);
+let generation = 0;
+
+function updateGenDisplay(){
+  const el = document.getElementById('genCounter');
+  if(el) el.textContent = String(generation);
+}
 
 speedVal.textContent = fps;
 speedRange.addEventListener('input', ()=>{
@@ -40,14 +46,19 @@ function clearGrid(){ grid.fill(0); draw(); }
 
 function randomize(){
   for(let i=0;i<grid.length;i++) grid[i] = Math.random() < 0.2 ? 1 : 0;
+  generation = 0; updateGenDisplay();
   draw();
 }
 
 function draw(){
   const imageData = ctx.createImageData(canvas.width, canvas.height);
   const data = imageData.data;
-  // Fill white background first (optional)
-  for(let i=0;i<data.length;i+=4){ data[i]=255; data[i+1]=255; data[i+2]=255; data[i+3]=255; }
+  // Dark background fill
+  const bgR = 11, bgG = 18, bgB = 32, bgA = 255;
+  for(let i=0;i<data.length;i+=4){ data[i]=bgR; data[i+1]=bgG; data[i+2]=bgB; data[i+3]=bgA; }
+
+  // Alive cell color (accent)
+  const aR = 0, aG = 255, aB = 179;
 
   for(let r=0;r<ROWS;r++){
     for(let c=0;c<COLS;c++){
@@ -57,9 +68,9 @@ function draw(){
         for(let y=0;y<CELL_SIZE;y++){
           let base = ((y0+y)*canvas.width + x0) * 4;
           for(let x=0;x<CELL_SIZE;x++){
-            data[base] = 0; // R
-            data[base+1] = 0; // G
-            data[base+2] = 0; // B
+            data[base] = aR; // R
+            data[base+1] = aG; // G
+            data[base+2] = aB; // B
             data[base+3] = 255; // A
             base += 4;
           }
@@ -91,6 +102,8 @@ function step(){
   }
   // swap
   const tmp = grid; grid = nextGrid; nextGrid = tmp;
+  generation += 1;
+  updateGenDisplay();
   draw();
 }
 
@@ -216,6 +229,7 @@ function applyPattern(coordsName){
     const cc = baseC + c;
     if(rr>=0 && rr<ROWS && cc>=0 && cc<COLS) grid[idx(rr,cc)] = 1;
   }
+  generation = 0; updateGenDisplay();
   draw();
 }
 
